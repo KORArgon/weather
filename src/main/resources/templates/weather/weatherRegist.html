@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>날씨 등록</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <form action="/weather/weatherRegist" method="post">
+        <label for="baseDate">측정일시분초</label>
+        <input type="text" id="baseDate" name="baseDate" placeholder="측정일시분초를 입력하세요">
+        <button type="submit">등록</button>
+    </form>
+</body>
+</html>
