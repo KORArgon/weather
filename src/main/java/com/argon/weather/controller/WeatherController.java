@@ -4,24 +4,32 @@ import com.argon.weather.domain.Weather;
 import com.argon.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class WeatherController {
 
 
-    private final WeatherService memberService;
+    private final WeatherService weatherService;
 
     @GetMapping("/weather/weatherListForm")
-    public String weatherListForm(){
+    public String weatherListForm(Model model){
+        List<Weather> weatherList = weatherService.findAll();
+        model.addAttribute("weatherList", weatherList);
         return "weather/weatherList";
     }
 
     @GetMapping("/weather/weatherViewForm")
-    public String weatherViewForm(Weather weather){
-        return "weather/weatherList";
+    public String weatherViewForm(Weather weather, Model model){
+        Optional<Weather> result = weatherService.findById(weather.getWeatherId());
+        model.addAttribute("result", result);
+        return "weather/weatherView";
     }
 
     @GetMapping("/weather/weatherRegistForm")
@@ -31,12 +39,14 @@ public class WeatherController {
 
     @PostMapping("/weather/weatherRegist")
     public String weatherRegist(Weather weather){
-        memberService.save(weather);
+        weatherService.save(weather);
         return "weather/weatherRegist";
     }
 
     @GetMapping("/weather/weatherUpdateForm")
-    public String weatherUpdateForm(Weather weather){
+    public String weatherUpdateForm(Weather weather, Model model){
+        Optional<Weather> result = weatherService.findById(weather.getWeatherId());
+        model.addAttribute("result", result);
         return "weather/weatherUpdate";
     }
 
@@ -50,6 +60,12 @@ public class WeatherController {
     public String weatherDelete(Weather weather){
 
         return "weather/weatherList";
+    }
+
+    @GetMapping("/weather/weatherRegistAuto")
+    public String weatherRegistAuto(){
+        weatherService.saveAuto();
+        return "weather/weatherRegist";
     }
 
 }

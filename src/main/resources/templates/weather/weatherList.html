@@ -3,7 +3,29 @@
 <head>
     <title>날씨 목록</title>
     <meta charset="UTF-8">
+    <link href="/css/weather.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>이름</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="weather : ${weatherList}">
+                <td th:text="${weather.weatherId}"></td>
+                <td> <a th:href="@{/weather/weatherViewForm(weatherId=${weather.weatherId})}"  th:text="${weather.baseDate}"></a></td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/" class="sub_btn">메인</a>
+        <a href="/weather/weatherRegistForm" class="sub_btn">등록</a>
+        <a href="/weather/weatherRegistAuto" class="sub_btn">날씨수집</a>
+    </div>
+</div>
 </body>
 </html>

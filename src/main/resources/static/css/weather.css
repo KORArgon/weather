@@ -1,0 +1,46 @@
+.main_div {
+    text-align: center;
+}
+
+.main_big_btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 400px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #3498db;
+    transition: background-color 0.3s;
+    width: 1600px;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.main_big_btn:hover {
+    background-color: #2980b9;
+}
+
+/* 기본 버튼 스타일 */
+.sub_btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #3498db;
+    border-radius: 4px;
+    color: #ffffff;
+    background-color: #3498db;
+    transition: background-color 0.3s;
+}
+
+/* 버튼에 호버 효과 추가 */
+.sub_btn:hover {
+    background-color: #2980b9;
+}
