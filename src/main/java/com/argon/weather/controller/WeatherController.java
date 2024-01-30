@@ -3,11 +3,13 @@ package com.argon.weather.controller;
 import com.argon.weather.domain.Weather;
 import com.argon.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +65,7 @@ public class WeatherController {
     }
 
     @GetMapping("/weather/weatherRegistAuto")
-    public String weatherRegistAuto(){
+    public String weatherRegistAuto() throws IOException, ParseException {
         weatherService.saveAuto();
         return "weather/weatherRegist";
     }
