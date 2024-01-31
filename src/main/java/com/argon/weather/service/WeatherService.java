@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -33,8 +34,8 @@ public class WeatherService {
         weatherRepository.save(weather);
     }
 
-    public List<Weather> findAll() {
-        return weatherRepository.findAll();
+    public List<Weather> findAll(Pageable pageable) {
+        return weatherRepository.findAll(pageable).getContent();
     }
 
     public Optional<Weather> findById(Long id){

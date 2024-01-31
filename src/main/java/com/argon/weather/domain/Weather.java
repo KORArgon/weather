@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name="NT_WEATHER")
-public class Weather {
+public class Weather extends Search {
 
     @Id
     @Column(name = "WEATHER_ID", nullable = false)

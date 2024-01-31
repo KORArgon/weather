@@ -3,18 +3,60 @@
 <head>
     <title>날씨 등록</title>
     <meta charset="UTF-8">
+    <link href="/css/weather.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div class="container">
+    <div class="main_div">
     <form action="/weather/weatherRegist" method="post">
-        <table>
+        <table class="sub_table">
             <tbody>
-                <th>
-                    <label for="baseDate">측정일시분초</label>
-                    <input type="text" id="baseDate" name="baseDate" placeholder="측정일시분초를 입력하세요">
-                </th>
+                <tr>
+                    <th><label for="baseDate">측정일</label></th>
+                    <td><input type="text" id="baseDate" name="baseDate" placeholder="측정일을 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="baseTime">측정시분초</label></th>
+                    <td><input type="text" id="baseTime" name="baseTime" placeholder="측정시분초를 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="pty">강수형태</label></th>
+                    <td><input type="text" id="pty" name="pty" placeholder="강수형태를 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="reh">습도</label></th>
+                    <td><input type="text" id="reh" name="reh" placeholder="습도를 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="rn1">1시간 강수량</label></th>
+                    <td><input type="text" id="rn1" name="rn1" placeholder="1시간 강수량을 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="t1h">기온</label></th>
+                    <td><input type="text" id="t1h" name="t1h" placeholder="기온을 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="uuu">동서바람성분</label></th>
+                    <td><input type="text" id="uuu" name="uuu" placeholder="동서바람성분을 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="vec">풍향</label></th>
+                    <td><input type="text" id="vec" name="vec" placeholder="풍향을 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="vvv">남북바람성분</label></th>
+                    <td><input type="text" id="vvv" name="vvv" placeholder="남북바람성분을 입력하세요"></td>
+                </tr>
+                <tr>
+                    <th><label for="wsd">풍속</label></th>
+                    <td><input type="text" id="wsd" name="wsd" placeholder="풍속을 입력하세요"></td>
+                </tr>
             </tbody>
         </table>
-        <button type="submit">등록</button>
+        <button type="submit" class="btn_m">등록</button>
+        <a href="/weather/weatherListForm" class="sub_btn">목록</a>
     </form>
+    </div>
+</div>
 </body>
 </html>

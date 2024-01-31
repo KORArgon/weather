@@ -7,12 +7,12 @@
 </head>
 <body>
 <div class="container">
-    <div>
+    <div class="main_div">
         <table class="sub_table">
             <thead>
             <tr>
-                <th>측정일시분초</th>
-                <th>측정일시분초</th>
+                <th>측정일</th>
+                <th>측정시분초</th>
                 <th>강수형태</th>
                 <th>습도</th>
                 <th>1시간 강수량</th>
@@ -36,15 +36,32 @@
                 <td th:text="${weather.vec}"></td>
                 <td th:text="${weather.vvv}"></td>
                 <td th:text="${weather.wsd}"></td>
-                <td><a th:href="@{/weather/weatherViewForm(weatherId=${weather.weatherId})}">보기</a></td>
-                <td><a th:href="@{/weather/weatherUpdateForm(weatherId=${weather.weatherId})}">수정</a></td>
-                <td><a th:href="@{/weather/weatherDeleteForm(weatherId=${weather.weatherId})}">삭제</a></td>
+                <td><a class="btn_s" th:href="@{/weather/weatherViewForm(weatherId=${weather.weatherId})}">보기</a></td>
+                <td><a class="btn_s" th:href="@{/weather/weatherUpdateForm(weatherId=${weather.weatherId})}">수정</a></td>
+                <td><a class="btn_s" th:href="@{/weather/weatherDelete(weatherId=${weather.weatherId})}">삭제</a></td>
             </tr>
             </tbody>
         </table>
         <a href="/" class="sub_btn">메인</a>
-        <a href="/weather/weatherRegistForm" class="sub_btn">등록</a>
-        <a href="/weather/weatherRegistAuto" class="sub_btn">날씨수집</a>
+        <a href="/weather/weatherRegistForm" class="btn_m">등록</a>
+        <a href="/weather/weatherRegistAuto" class="btn_m">날씨수집</a>
+        <div>
+            <ul class="pagination">
+                <li th:unless="${dataPage.first}" th:attr="th:onclick='|window.location.href=\'/data?page=${currentPage - 1}\'|'">
+                    <span>Previous</span>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(0, dataPage.totalPages - 1)}" th:class="${currentPage == i} ? 'active' : ''">
+                    <a th:unless="${pageNumber == i}" th:attr="th:onclick='|window.location.href=\'/data?page=${i}\'|'" th:text="${i} + 1"></a>
+                    <span th:if="${pageNumber == i}" th:text="${i} + 1"></span>
+                </li>
+
+                <li th:unless="${dataPage.last}" th:attr="th:onclick='|window.location.href=\'/data?page=${currentPage + 1}\'|'">
+                    <span>Next</span>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </div>
 </body>

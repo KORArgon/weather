@@ -5,6 +5,7 @@ import com.argon.weather.service.MessageService;
 import com.argon.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +31,10 @@ public class WeatherController {
      * @return
      */
     @GetMapping("/weather/weatherListForm")
-    public String weatherListForm(Model model){
-        List<Weather> weatherList = weatherService.findAll();
+    public String weatherListForm(Model model, Pageable pageable){
+        List<Weather> weatherList = weatherService.findAll(pageable);
         model.addAttribute("weatherList", weatherList);
+        model.addAttribute("pageable", pageable);
         return "weather/weatherList";
     }
 
@@ -67,7 +69,7 @@ public class WeatherController {
         return "weather/weatherUpdate";
     }
 
-    @PostMapping("/weather/weatherDelete")
+    @GetMapping("/weather/weatherDelete")
     public String weatherDelete(Model model, Weather weather){
         weatherService.weatherDelete(weather);
         return messageService.redirectMessage(model, "삭제를 완료했습니다.", "/weather/weatherListForm");
