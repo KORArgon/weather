@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,43 +104,26 @@ public class WeatherService {
     }
     
     public String getWeatherTimeFormat(String time){
-        if(Integer.parseInt(time) > 0 && Integer.parseInt(time) < 200){
-            return "2300";
-        }
-        else if(Integer.parseInt(time) > 200 && Integer.parseInt(time) < 400){
-            return "0100";
-        }
-        else if(Integer.parseInt(time) > 400 && Integer.parseInt(time) < 600){
-            return "0300";
-        }
-        else if(Integer.parseInt(time) > 600 && Integer.parseInt(time) < 800){
-            return "0500";
-        }
-        else if(Integer.parseInt(time) > 800 && Integer.parseInt(time) < 1000){
-            return "0700";
-        }
-        else if(Integer.parseInt(time) > 1000 && Integer.parseInt(time) < 1200){
-            return "0900";
-        }
-        else if(Integer.parseInt(time) > 1200 && Integer.parseInt(time) < 1400){
-            return "1100";
-        }
-        else if(Integer.parseInt(time) > 1400 && Integer.parseInt(time) < 1600){
-            return "1300";
-        }
-        else if(Integer.parseInt(time) > 1600 && Integer.parseInt(time) < 1800){
-            return "1500";
-        }
-        else if(Integer.parseInt(time) > 1800 && Integer.parseInt(time) < 2000){
-            return "1700";
-        }
-        else if(Integer.parseInt(time) > 2000 && Integer.parseInt(time) < 2200){
-            return "1900";
-        }
-        else if(Integer.parseInt(time) > 2200 && Integer.parseInt(time) < 2400){
-            return "2100";
-        }
+        if(Integer.parseInt(time) > 0 && Integer.parseInt(time) < 200) return "2300";
+        else if(Integer.parseInt(time) > 200 && Integer.parseInt(time) < 400) return "0100";
+        else if(Integer.parseInt(time) > 400 && Integer.parseInt(time) < 600) return "0300";
+        else if(Integer.parseInt(time) > 600 && Integer.parseInt(time) < 800) return "0500";
+        else if(Integer.parseInt(time) > 800 && Integer.parseInt(time) < 1000) return "0700";
+        else if(Integer.parseInt(time) > 1000 && Integer.parseInt(time) < 1200) return "0900";
+        else if(Integer.parseInt(time) > 1200 && Integer.parseInt(time) < 1400) return "1100";
+        else if(Integer.parseInt(time) > 1400 && Integer.parseInt(time) < 1600) return "1300";
+        else if(Integer.parseInt(time) > 1600 && Integer.parseInt(time) < 1800) return "1500";
+        else if(Integer.parseInt(time) > 1800 && Integer.parseInt(time) < 2000) return "1700";
+        else if(Integer.parseInt(time) > 2000 && Integer.parseInt(time) < 2200) return "1900";
+        else if(Integer.parseInt(time) > 2200 && Integer.parseInt(time) < 2400) return "2100";
         else return "0000";
     }
-    
+
+    public Weather selectWeatherLast() {
+        return weatherRepository.selectWeatherLast();
+    }
+
+    public void weatherDelete(Weather weather) {
+        weatherRepository.delete(weather);
+    }
 }

@@ -1,6 +1,7 @@
 package com.argon.weather.controller;
 
 import com.argon.weather.domain.Weather;
+import com.argon.weather.service.MessageService;
 import com.argon.weather.service.WeatherService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
@@ -17,9 +18,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WeatherController {
 
-
+    // weatherService
     private final WeatherService weatherService;
 
+    // messageService
+    private final MessageService messageService;
+
+    /**
+     * 날씨 목록 조회
+     * @param model
+     * @return
+     */
     @GetMapping("/weather/weatherListForm")
     public String weatherListForm(Model model){
         List<Weather> weatherList = weatherService.findAll();
@@ -59,15 +68,15 @@ public class WeatherController {
     }
 
     @PostMapping("/weather/weatherDelete")
-    public String weatherDelete(Weather weather){
-
-        return "weather/weatherList";
+    public String weatherDelete(Model model, Weather weather){
+        weatherService.weatherDelete(weather);
+        return messageService.redirectMessage(model, "삭제를 완료했습니다.", "/weather/weatherListForm");
     }
 
     @GetMapping("/weather/weatherRegistAuto")
-    public String weatherRegistAuto() throws IOException, ParseException {
+    public String weatherRegistAuto(Model model) throws IOException, ParseException {
         weatherService.saveAuto();
-        return "weather/weatherRegist";
+        return messageService.redirectMessage(model, "등록을 완료했습니다.", "/weather/weatherListForm");
     }
 
 }

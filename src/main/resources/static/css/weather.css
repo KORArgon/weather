@@ -5,7 +5,7 @@
 .main_big_btn {
     display: inline-block;
     padding: 10px 20px;
-    font-size: 400px;
+    font-size: 200px;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
@@ -14,8 +14,8 @@
     color: #ffffff;
     background-color: #3498db;
     transition: background-color 0.3s;
-    width: 1600px;
-    height: 600px;
+    width: 800px;
+    height: 300px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -43,4 +43,35 @@
 /* 버튼에 호버 효과 추가 */
 .sub_btn:hover {
     background-color: #2980b9;
+}
+
+/* 테이블 전체 스타일 */
+.sub_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+/* 테이블 헤더 스타일 */
+.sub_table th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* 테이블 셀 스타일 */
+.sub_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* 짝수 행 배경색 지정 */
+.sub_table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 마우스 호버 시 셀 배경색 변경 */
+.sub_table tr:hover {
+    background-color: #e5e5e5;
 }
