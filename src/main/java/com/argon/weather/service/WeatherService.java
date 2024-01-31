@@ -2,17 +2,16 @@ package com.argon.weather.service;
 
 import com.argon.weather.domain.Weather;
 import com.argon.weather.repository.WeatherRepository;
+import com.argon.weather.util.DateUtil;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -22,6 +21,9 @@ import java.util.Optional;
 
 @Service
 public class WeatherService {
+
+    @Value("${weather.api.key}")
+    private String apiKey;
 
     private final WeatherRepository weatherRepository;
 
@@ -44,59 +46,14 @@ public class WeatherService {
 
     public void saveAuto() throws IOException, ParseException {
 
-        SimpleDateFormat format_date = new SimpleDateFormat("yyyyMMdd");
-        SimpleDateFormat format_time = new SimpleDateFormat("HHmm");
-        Date date = new Date();
-
-        String base_date = format_date.format(date);
-        String base_time = format_time.format(date);
-
-        if(Integer.parseInt(base_time) > 0 && Integer.parseInt(base_time) < 200){
-            base_time = "2300";
-        }
-        else if(Integer.parseInt(base_time) > 200 && Integer.parseInt(base_time) < 400){
-            base_time = "0100";
-        }
-        else if(Integer.parseInt(base_time) > 400 && Integer.parseInt(base_time) < 600){
-            base_time = "0300";
-        }
-        else if(Integer.parseInt(base_time) > 600 && Integer.parseInt(base_time) < 800){
-            base_time = "0500";
-        }
-        else if(Integer.parseInt(base_time) > 800 && Integer.parseInt(base_time) < 1000){
-            base_time = "0700";
-        }
-        else if(Integer.parseInt(base_time) > 1000 && Integer.parseInt(base_time) < 1200){
-            base_time = "0900";
-        }
-        else if(Integer.parseInt(base_time) > 1200 && Integer.parseInt(base_time) < 1400){
-            base_time = "1100";
-        }
-        else if(Integer.parseInt(base_time) > 1400 && Integer.parseInt(base_time) < 1600){
-            base_time = "1300";
-        }
-        else if(Integer.parseInt(base_time) > 1600 && Integer.parseInt(base_time) < 1800){
-            base_time = "1500";
-        }
-        else if(Integer.parseInt(base_time) > 1800 && Integer.parseInt(base_time) < 2000){
-            base_time = "1700";
-        }
-        else if(Integer.parseInt(base_time) > 2000 && Integer.parseInt(base_time) < 2200){
-            base_time = "1900";
-        }
-        else if(Integer.parseInt(base_time) > 2200 && Integer.parseInt(base_time) < 2400){
-            base_time = "2100";
-        }
+        String base_date = DateUtil.getSimpleDateUtil("yyyyMMdd");
+        String base_time = getWeatherTimeFormat(DateUtil.getSimpleDateUtil("HHmm"));
 
         String nx = "69";
         String ny = "107";
 
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + URLEncoder.encode("", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("12", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("dataType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON)Default: XML*/
-        urlBuilder.append("&" + URLEncoder.encode("ftype","UTF-8") + "=" + URLEncoder.encode("SHRT", "UTF-8")); /*15년 12월 1일 발표*/
+        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?pageNo=1&numOfRows=12&dataType=JSON&ftype=SHRT"); /*URL*/
+        urlBuilder.append("&" + URLEncoder.encode("serviceKey","UTF-8") + "=" + URLEncoder.encode(apiKey, "UTF-8")); /*공공데이터포털에서 받은 인증키*/
         urlBuilder.append("&" + URLEncoder.encode("base_date","UTF-8") + "=" + URLEncoder.encode(base_date, "UTF-8")); /*15년 12월 1일 발표*/
         urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode(base_time, "UTF-8")); /*06시 발표(정시단위)*/
         urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode(nx, "UTF-8")); /*예보지점의 X 좌표값*/
@@ -106,13 +63,14 @@ public class WeatherService {
         InputStreamReader isr = new InputStreamReader(url.openConnection().getInputStream(), "UTF-8");
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(isr);
-
         JSONObject response = (JSONObject) json.get("response");
         JSONObject body = (JSONObject) response.get("body");
         JSONObject items = (JSONObject) body.get("items");
         JSONArray itemArray = (JSONArray) items.get("item");
-        Weather weather = new Weather();
 
+        Weather weather = new Weather();
+        weather.setBaseDate(base_date);
+        weather.setBaseTime(base_time);
         for (Object item : itemArray) {
             JSONObject jsonItem = (JSONObject) item;
             switch ((String) jsonItem.get("category")){
@@ -146,4 +104,45 @@ public class WeatherService {
         }
         weatherRepository.save(weather);
     }
+    
+    public String getWeatherTimeFormat(String time){
+        if(Integer.parseInt(time) > 0 && Integer.parseInt(time) < 200){
+            return "2300";
+        }
+        else if(Integer.parseInt(time) > 200 && Integer.parseInt(time) < 400){
+            return "0100";
+        }
+        else if(Integer.parseInt(time) > 400 && Integer.parseInt(time) < 600){
+            return "0300";
+        }
+        else if(Integer.parseInt(time) > 600 && Integer.parseInt(time) < 800){
+            return "0500";
+        }
+        else if(Integer.parseInt(time) > 800 && Integer.parseInt(time) < 1000){
+            return "0700";
+        }
+        else if(Integer.parseInt(time) > 1000 && Integer.parseInt(time) < 1200){
+            return "0900";
+        }
+        else if(Integer.parseInt(time) > 1200 && Integer.parseInt(time) < 1400){
+            return "1100";
+        }
+        else if(Integer.parseInt(time) > 1400 && Integer.parseInt(time) < 1600){
+            return "1300";
+        }
+        else if(Integer.parseInt(time) > 1600 && Integer.parseInt(time) < 1800){
+            return "1500";
+        }
+        else if(Integer.parseInt(time) > 1800 && Integer.parseInt(time) < 2000){
+            return "1700";
+        }
+        else if(Integer.parseInt(time) > 2000 && Integer.parseInt(time) < 2200){
+            return "1900";
+        }
+        else if(Integer.parseInt(time) > 2200 && Integer.parseInt(time) < 2400){
+            return "2100";
+        }
+        else return "0000";
+    }
+    
 }
