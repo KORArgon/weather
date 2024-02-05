@@ -22,7 +22,7 @@ public class Scheduler {
 
 //    @Scheduled(fixedRate = 10000)
     @Scheduled(cron = "0 0 * * * *")
-    public void autoSchd() throws IOException, ParseException {
+    public void schedulerWeatherInsert() throws IOException, ParseException {
         log.info("스케줄러동작");
         weatherService.saveAuto();
         log.info("스케줄러성공");
