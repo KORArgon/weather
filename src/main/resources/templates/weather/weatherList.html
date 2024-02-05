@@ -8,58 +8,60 @@
 <body>
 <div class="container">
     <div class="main_div">
-        <table class="sub_table">
-            <thead>
-            <tr>
-                <th>측정일</th>
-                <th>측정시분초</th>
-                <th>강수형태</th>
-                <th>습도</th>
-                <th>1시간 강수량</th>
-                <th>기온</th>
-                <th>동서바람성분</th>
-                <th>풍향</th>
-                <th>남북바람성분</th>
-                <th>풍속</th>
-                <th colspan="3" style="text-align: center">관리</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="weather : ${weatherList}">
-                <td th:text="${weather.baseDate}"></td>
-                <td th:text="${weather.baseTime}"></td>
-                <td th:text="${weather.pty}"></td>
-                <td th:text="${weather.reh}"></td>
-                <td th:text="${weather.rn1}"></td>
-                <td th:text="${weather.t1h}"></td>
-                <td th:text="${weather.uuu}"></td>
-                <td th:text="${weather.vec}"></td>
-                <td th:text="${weather.vvv}"></td>
-                <td th:text="${weather.wsd}"></td>
-                <td><a class="btn_s" th:href="@{/weather/weatherViewForm(weatherId=${weather.weatherId})}">보기</a></td>
-                <td><a class="btn_s" th:href="@{/weather/weatherUpdateForm(weatherId=${weather.weatherId})}">수정</a></td>
-                <td><a class="btn_s" th:href="@{/weather/weatherDelete(weatherId=${weather.weatherId})}">삭제</a></td>
-            </tr>
-            </tbody>
-        </table>
-        <a href="/" class="sub_btn">메인</a>
-        <a href="/weather/weatherRegistForm" class="btn_m">등록</a>
-        <a href="/weather/weatherRegistAuto" class="btn_m">날씨수집</a>
         <div>
-            <ul class="pagination">
-                <li th:unless="${dataPage.first}" th:attr="th:onclick='|window.location.href=\'/data?page=${currentPage - 1}\'|'">
-                    <span>Previous</span>
-                </li>
-
-                <li th:each="i : ${#numbers.sequence(0, dataPage.totalPages - 1)}" th:class="${currentPage == i} ? 'active' : ''">
-                    <a th:unless="${pageNumber == i}" th:attr="th:onclick='|window.location.href=\'/data?page=${i}\'|'" th:text="${i} + 1"></a>
-                    <span th:if="${pageNumber == i}" th:text="${i} + 1"></span>
-                </li>
-
-                <li th:unless="${dataPage.last}" th:attr="th:onclick='|window.location.href=\'/data?page=${currentPage + 1}\'|'">
-                    <span>Next</span>
-                </li>
-            </ul>
+            <table class="sub_table">
+                <thead>
+                <tr>
+                    <th>측정일</th>
+                    <th>측정시분초</th>
+                    <th>강수형태</th>
+                    <th>습도</th>
+                    <th>1시간 강수량</th>
+                    <th>기온</th>
+                    <th>동서바람성분</th>
+                    <th>풍향</th>
+                    <th>남북바람성분</th>
+                    <th>풍속</th>
+                    <th colspan="3" style="text-align: center">관리</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="weather : ${weatherList}">
+                    <td th:text="${weather.baseDate}"></td>
+                    <td th:text="${weather.baseTime}"></td>
+                    <td th:text="${weather.pty}"></td>
+                    <td th:text="${weather.reh}"></td>
+                    <td th:text="${weather.rn1}"></td>
+                    <td th:text="${weather.t1h}"></td>
+                    <td th:text="${weather.uuu}"></td>
+                    <td th:text="${weather.vec}"></td>
+                    <td th:text="${weather.vvv}"></td>
+                    <td th:text="${weather.wsd}"></td>
+                    <td><a class="btn_s" th:href="@{/weather/weatherViewForm(weatherId=${weather.weatherId})}">보기</a></td>
+                    <td><a class="btn_s" th:href="@{/weather/weatherUpdateForm(weatherId=${weather.weatherId})}">수정</a></td>
+                    <td><a class="btn_s" th:href="@{/weather/weatherDelete(weatherId=${weather.weatherId})}">삭제</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a href="/" class="sub_btn">메인</a>
+            <a href="/weather/weatherRegistForm" class="btn_m">등록</a>
+            <a href="/weather/weatherRegistAuto" class="btn_m">날씨수집</a>
+        </div>
+        <div class="pagination">
+            <a th:href="@{/weather/weatherListForm(page=0)}">최초페이지</a>
+            <th:block th:if="${nowPage != 1}"><a th:href="@{/weather/weatherListForm(page=${nowPage-2})}">이전페이지</a></th:block>
+            <th:block th:if="${nowPage == 1}"><a th:href="@{/weather/weatherListForm(page=0)}">이전페이지</a></th:block>
+            <th:block th:each="page:${#numbers.sequence(startPage,endPage)}">
+                <th:block th:if="${endPage >= nowPage }">
+                    <a th:if="${page != nowPage}" th:href="@{/weather/weatherListForm(page=${page-1})}" th:text ="${page}"></a>
+                    <strong th:if="${page==nowPage}" th:text ="${page}"></strong>
+                </th:block>
+            </th:block>
+            <th:block th:if="${nowPage != totalPages}"><a th:href="@{/weather/weatherListForm(page=${nowPage})}">다음페이지</a></th:block>
+            <th:block th:if="${nowPage == totalPages}"><a th:href="@{/weather/weatherListForm(page=${totalPages-1})}">다음페이지</a></th:block>
+            <a th:href="@{/weather/weatherListForm(page=${totalPages-1})}">마지막페이지</a>
         </div>
 
     </div>
