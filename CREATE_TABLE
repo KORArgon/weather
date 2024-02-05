@@ -1,0 +1,17 @@
+create table NT_WEATHER
+(
+    WEATHER_ID int auto_increment comment '날씨 ID'
+        primary key,
+    BASE_DATE  char(14)    null comment '측정일',
+    BASE_TIME  char(14)    null comment '측정시간',
+    PTY        varchar(50) null comment '강수형태',
+    REH        varchar(50) null comment '습도',
+    RN1        varchar(50) null comment '1시간 강수량',
+    T1H        varchar(50) null comment '기온',
+    UUU        varchar(50) null comment '동서바람성분',
+    VEC        varchar(50) null comment '풍향',
+    VVV        varchar(50) null comment '남북바람성분',
+    WSD        varchar(50) null comment '풍속'
+)
+    comment '날씨정보' charset = utf8mb3;
+
