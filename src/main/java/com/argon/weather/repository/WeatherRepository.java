@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface WeatherRepository extends JpaRepository<Weather, Long> {
 
     @Query("SELECT m FROM Weather m ORDER BY m.weatherId DESC LIMIT 1")
-    Weather selectWeatherLast();
+    Weather weatherLast();
 
 }

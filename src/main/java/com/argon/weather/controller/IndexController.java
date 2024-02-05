@@ -16,7 +16,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model){
 
-        Weather weather = weatherService.selectWeatherLast();
+        Weather weather = weatherService.weatherLast();
         model.addAttribute("weather", weather);
 
         return "index";
