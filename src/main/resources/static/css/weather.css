@@ -104,3 +104,51 @@
 .sub_table tr:hover {
     background-color: #e5e5e5;
 }
+
+
+/* Styling for pagination container */
+.pagination div {
+    margin-bottom: 20px;
+}
+
+/* Styling for pagination links */
+.pagination a {
+    padding: 8px 12px;
+    margin: 10px 5px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.pagination a:hover {
+    background-color: #f2f2f2;
+}
+
+/* Styling for the current page */
+.pagination strong {
+    padding: 8px 12px;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+}
+
+/* Styling for the previous and next links */
+.pagination a.th-disabled {
+    color: #aaa;
+    pointer-events: none;
+}
+
+/* Optional: Styling for the '마지막페이지' link */
+.pagination a:last-child {
+    margin-left: 10px;
+}
+
+/* Optional: Adding some spacing between pagination links */
+.pagination th|block {
+    margin-right: 5px;
+}
