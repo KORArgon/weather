@@ -10,20 +10,35 @@
     <div class="main_div">
         <div>
             <table class="sub_table">
+                <colgroup>
+                    <col width="8%">
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="8%"/>
+                    <col width="5%"/>
+                    <col width="5%"/>
+                    <col width="5%"/>
+                </colgroup>
                 <thead>
-                <tr>
-                    <th>측정일</th>
-                    <th>측정시분초</th>
-                    <th>강수형태</th>
-                    <th>습도</th>
-                    <th>1시간 강수량</th>
-                    <th>기온</th>
-                    <th>동서바람성분</th>
-                    <th>풍향</th>
-                    <th>남북바람성분</th>
-                    <th>풍속</th>
-                    <th colspan="3" style="text-align: center">관리</th>
-                </tr>
+                    <tr>
+                        <th>측정일</th>
+                        <th>측정시분초</th>
+                        <th>강수형태</th>
+                        <th>습도</th>
+                        <th>1시간 강수량</th>
+                        <th>기온</th>
+                        <th>동서바람성분</th>
+                        <th>풍향</th>
+                        <th>남북바람성분</th>
+                        <th>풍속</th>
+                        <th colspan="3" style="text-align: center">관리</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <tr th:each="weather : ${weatherList}">
@@ -39,7 +54,12 @@
                     <td th:text="${weather.wsd}"></td>
                     <td><a class="btn_s" th:href="@{/weather/weatherViewForm(weatherId=${weather.weatherId})}">보기</a></td>
                     <td><a class="btn_s" th:href="@{/weather/weatherUpdateForm(weatherId=${weather.weatherId})}">수정</a></td>
-                    <td><a class="btn_s" th:href="@{/weather/weatherDelete(weatherId=${weather.weatherId})}">삭제</a></td>
+                    <td>
+                        <form id="delete_form" th:action="@{/weather/weatherDelete(weatherId=${weather.weatherId})}" method="post">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <input type="submit" class="btn_s" value="삭제">
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -11,8 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -91,7 +90,7 @@ public class WeatherController {
      * @param model
      * @return
      */
-    @PostMapping("/weather/weatherUpdate")
+    @PutMapping("/weather/weatherUpdate")
     public String weatherUpdate(Weather weather, Model model){
         weatherService.save(weather);
         return messageService.redirectMessage(model, "수정을 완료했습니다.", "/weather/weatherListForm");
@@ -103,7 +102,7 @@ public class WeatherController {
      * @param model
      * @return
      */
-    @GetMapping("/weather/weatherDelete")
+    @DeleteMapping("/weather/weatherDelete")
     public String weatherDelete(Weather weather, Model model){
         weatherService.weatherDelete(weather);
         return messageService.redirectMessage(model, "삭제를 완료했습니다.", "/weather/weatherListForm");

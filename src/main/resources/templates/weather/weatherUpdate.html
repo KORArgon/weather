@@ -10,6 +10,7 @@
     <div class="main_div">
         <form th:action="@{/weather/weatherUpdate}" th:object="${weather}" method="post">
             <input type="hidden" id="weatherId" name="weatherId" th:value="*{weatherId}" />
+            <input type="hidden" name="_method" value="put"/>
             <table class="sub_table">
                 <tbody>
                 <tr>
